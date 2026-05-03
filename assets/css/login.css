@@ -1,0 +1,251 @@
+/* ============================================================
+   LOGIN PAGE — SiPinjam Admin
+============================================================ */
+
+.login-page {
+  min-height: 100vh;
+  background: #0a1628;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Sans', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background animated shapes */
+.login-page::before {
+  content: '';
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(37,99,235,.25) 0%, transparent 65%);
+  border-radius: 50%;
+  animation: pulse-bg 6s ease-in-out infinite;
+}
+.login-page::after {
+  content: '';
+  position: absolute;
+  bottom: -150px; left: -150px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(245,158,11,.12) 0%, transparent 65%);
+  border-radius: 50%;
+  animation: pulse-bg 6s ease-in-out infinite reverse;
+}
+
+@keyframes pulse-bg {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.1); opacity: .7; }
+}
+
+/* Dot grid decoration */
+.login-dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+
+/* ============================================================
+   WRAPPER
+============================================================ */
+.login-wrapper {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+  padding: 20px;
+  animation: slide-up .6s cubic-bezier(.16,1,.3,1) both;
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   BRAND HEADER
+============================================================ */
+.login-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.login-brand-icon {
+  width: 44px; height: 44px;
+  background: #f59e0b;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  color: #0a1628;
+  box-shadow: 0 4px 16px rgba(245,158,11,.4);
+}
+.login-brand-name {
+  font-family: 'Sora', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -.5px;
+}
+
+/* ============================================================
+   CARD
+============================================================ */
+.login-card {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.1);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 24px;
+  padding: 40px 36px 36px;
+  box-shadow: 0 24px 64px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+.login-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 6px;
+}
+.login-subtitle {
+  text-align: center;
+  font-size: .875rem;
+  color: rgba(255,255,255,.5);
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   FORM
+============================================================ */
+.login-label {
+  font-size: .8rem;
+  font-weight: 600;
+  color: rgba(255,255,255,.6);
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.login-input-wrap {
+  position: relative;
+  margin-bottom: 20px;
+}
+.login-input-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,.35);
+  font-size: 1rem;
+  pointer-events: none;
+}
+.login-input-wrap .form-control {
+  background: rgba(255,255,255,.07);
+  border: 1.5px solid rgba(255,255,255,.1);
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 13px 16px 13px 44px;
+  font-size: .95rem;
+  transition: all .25s;
+  width: 100%;
+}
+.login-input-wrap .form-control:focus {
+  background: rgba(255,255,255,.1);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,.15);
+  color: #ffffff;
+  outline: none;
+}
+.login-input-wrap .form-control::placeholder {
+  color: rgba(255,255,255,.3);
+}
+
+/* ============================================================
+   BUTTON
+============================================================ */
+.login-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #2563eb, #1a56db);
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: .95rem;
+  color: #ffffff;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: all .25s;
+  box-shadow: 0 4px 20px rgba(37,99,235,.4);
+  letter-spacing: .2px;
+}
+.login-btn:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1a56db);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(37,99,235,.55);
+}
+.login-btn:active {
+  transform: translateY(0);
+}
+
+/* ============================================================
+   ALERT
+============================================================ */
+.login-alert {
+  background: rgba(239,68,68,.15);
+  border: 1px solid rgba(239,68,68,.3);
+  color: #fca5a5;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: .875rem;
+  text-align: center;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* ============================================================
+   DIVIDER & FOOTER
+============================================================ */
+.login-divider {
+  margin: 28px 0 0;
+  border: none;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.login-footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: .78rem;
+  color: rgba(255,255,255,.3);
+}
+.login-footer a {
+  color: rgba(255,255,255,.5);
+  text-decoration: none;
+  transition: color .2s;
+}
+.login-footer a:hover { color: #f59e0b; }
+
+/* ============================================================
+   BACK LINK
+============================================================ */
+.login-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 24px;
+  font-size: .85rem;
+  color: rgba(255,255,255,.4);
+  text-decoration: none;
+  transition: color .2s;
+}
+.login-back:hover { color: rgba(255,255,255,.8); }

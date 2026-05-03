@@ -1,0 +1,290 @@
+/* ============================================================
+   TAMBAH BARANG — SiPinjam Admin
+============================================================ */
+
+:root {
+  --blue-900: #0a1628;
+  --blue-800: #0f2147;
+  --blue-600: #1a56db;
+  --blue-500: #2563eb;
+  --blue-400: #3b82f6;
+  --blue-100: #dbeafe;
+  --blue-50:  #eff6ff;
+  --accent:   #f59e0b;
+  --white:    #ffffff;
+  --gray-50:  #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-800: #1e293b;
+  --red:      #ef4444;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--gray-50);
+  color: var(--gray-800);
+  min-height: 100vh;
+}
+
+/* ── Topbar ── */
+.tb-topbar {
+  background: var(--blue-900);
+  padding: 0 32px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 12px rgba(0,0,0,.2);
+}
+.tb-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+.tb-brand-icon {
+  width: 34px; height: 34px;
+  background: var(--accent);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  color: var(--blue-900);
+}
+.tb-brand-name {
+  font-family: 'Sora', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--white);
+}
+.tb-back {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: rgba(255,255,255,.7);
+  text-decoration: none;
+  font-size: .875rem;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,.15);
+  transition: all .2s;
+}
+.tb-back:hover {
+  background: rgba(255,255,255,.1);
+  color: var(--white);
+}
+
+/* ── Wrapper ── */
+.tb-wrapper {
+  max-width: 640px;
+  margin: 40px auto;
+  padding: 0 20px 60px;
+}
+
+/* ── Page Header ── */
+.tb-page-header { margin-bottom: 28px; }
+.tb-page-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--blue-100);
+  color: var(--blue-600);
+  font-size: .72rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+.tb-page-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--gray-800);
+  letter-spacing: -.5px;
+  margin-bottom: 6px;
+}
+.tb-page-subtitle { font-size: .875rem; color: var(--gray-500); }
+
+/* ── Alert ── */
+.tb-alert {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-size: .875rem;
+  margin-bottom: 20px;
+}
+.tb-alert.error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+}
+
+/* ── Card ── */
+.tb-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200);
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  overflow: hidden;
+}
+.tb-card-header {
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--gray-100);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tb-card-icon {
+  width: 36px; height: 36px;
+  background: var(--blue-50);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--blue-600);
+  font-size: 1rem;
+}
+.tb-card-title {
+  font-family: 'Sora', sans-serif;
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--gray-800);
+}
+.tb-card-body { padding: 28px; }
+
+/* ── Form ── */
+.tb-form-group { margin-bottom: 22px; }
+.tb-label {
+  display: block;
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--gray-600);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 8px;
+}
+.tb-label span { color: var(--red); }
+
+.tb-input,
+.tb-textarea {
+  width: 100%;
+  background: var(--gray-50);
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-size: .95rem;
+  color: var(--gray-800);
+  font-family: 'DM Sans', sans-serif;
+  transition: all .25s;
+  outline: none;
+}
+.tb-input:focus,
+.tb-textarea:focus {
+  border-color: var(--blue-400);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(59,130,246,.1);
+}
+.tb-input::placeholder,
+.tb-textarea::placeholder { color: var(--gray-300); }
+.tb-textarea { resize: vertical; min-height: 100px; }
+.tb-hint { font-size: .75rem; color: var(--gray-400); margin-top: 5px; }
+
+/* ── Upload Foto ── */
+.tb-upload-area {
+  border: 2px dashed var(--gray-200);
+  border-radius: var(--radius-md);
+  padding: 32px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .25s;
+  background: var(--gray-50);
+  position: relative;
+}
+.tb-upload-area:hover,
+.tb-upload-area.dragover {
+  border-color: var(--blue-400);
+  background: var(--blue-50);
+}
+.tb-upload-area input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+.tb-upload-icon { font-size: 2rem; color: var(--gray-400); margin-bottom: 10px; }
+.tb-upload-text { font-size: .875rem; color: var(--gray-500); margin-bottom: 4px; }
+.tb-upload-text strong { color: var(--blue-600); }
+.tb-upload-hint { font-size: .75rem; color: var(--gray-400); }
+.tb-preview-img {
+  display: none;
+  width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  margin-top: 12px;
+}
+
+/* ── Card Footer ── */
+.tb-card-footer {
+  padding: 20px 28px;
+  border-top: 1px solid var(--gray-100);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  background: var(--gray-50);
+}
+.tb-btn-cancel {
+  background: var(--white);
+  color: var(--gray-600);
+  border: 1.5px solid var(--gray-200);
+  padding: 11px 22px;
+  border-radius: var(--radius-sm);
+  font-size: .875rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: all .2s;
+  font-family: inherit;
+}
+.tb-btn-cancel:hover { border-color: var(--gray-400); color: var(--gray-800); }
+.tb-btn-submit {
+  background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
+  color: var(--white);
+  border: none;
+  padding: 11px 28px;
+  border-radius: var(--radius-sm);
+  font-size: .875rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: all .25s;
+  font-family: 'Sora', sans-serif;
+  box-shadow: 0 4px 14px rgba(37,99,235,.3);
+}
+.tb-btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37,99,235,.4);
+}
+.tb-btn-submit:active { transform: translateY(0); }
