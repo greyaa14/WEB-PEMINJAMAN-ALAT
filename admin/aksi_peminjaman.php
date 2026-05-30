@@ -18,7 +18,7 @@ if (!$pinjam) {
     exit;
 }
 
-// ================== KONFIRMASI ==================
+// KONFIRMASI
 if ($aksi === 'konfirmasi' && $pinjam['status'] === 'menunggu') {
 
     // Ambil stok sekarang
@@ -52,7 +52,7 @@ if ($aksi === 'konfirmasi' && $pinjam['status'] === 'menunggu') {
     header("Location: dashboard.php?page=peminjaman&success=Peminjaman+dikonfirmasi");
 }
 
-// ================== KEMBALI ==================
+// KEMBALI
 elseif ($aksi === 'kembali' && $pinjam['status'] === 'dipinjam') {
 
     // Tambah stok kembali
@@ -72,7 +72,7 @@ elseif ($aksi === 'kembali' && $pinjam['status'] === 'dipinjam') {
     header("Location: dashboard.php?page=peminjaman&success=Barang+berhasil+dikembalikan");
 }
 
-// ================== TOLAK ==================
+// TOLAK
 elseif ($aksi === 'tolak' && $pinjam['status'] === 'menunggu') {
 
     mysqli_query($conn, "
@@ -84,7 +84,7 @@ elseif ($aksi === 'tolak' && $pinjam['status'] === 'menunggu') {
     header("Location: dashboard.php?page=peminjaman&success=Peminjaman+ditolak");
 }
 
-// ================== INVALID ==================
+// INVALID
 else {
     header("Location: dashboard.php?page=peminjaman&error=Aksi+tidak+valid");
 }

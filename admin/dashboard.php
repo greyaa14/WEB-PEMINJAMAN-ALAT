@@ -37,9 +37,11 @@ $menunggu       = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as tot
 ============================================================ -->
 <aside class="sidebar" id="sidebar">
   <a href="#" class="sidebar-brand" onclick="showSection('dashboard')">
-    <div class="sidebar-brand-icon"><i class="bi bi-box-seam-fill"></i></div>
-    <div class="sidebar-brand-name">SiPinjam</div>
-  </a>
+  <div class="sidebar-brand-icon">
+    <img src="../assets/img/logo-smk.png" alt="SMK Ketintang" />
+  </div>
+  <div class="sidebar-brand-name">SiPinjam</div>
+</a>
 
   <nav class="sidebar-nav">
     <div class="nav-section-label">Menu Utama</div>

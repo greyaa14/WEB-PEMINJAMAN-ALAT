@@ -65,11 +65,16 @@ body {
 }
 .da-brand-icon {
   width: 36px; height: 36px;
-  background: var(--accent);
-  border-radius: 9px;
+  border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 1rem;
-  color: var(--blue-900);
+  overflow: hidden;
+  background: transparent;
+  flex-shrink: 0;
+}
+.da-brand-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 .da-brand-name {
   font-family: 'Sora', sans-serif;

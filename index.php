@@ -8,30 +8,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SiPinjam — SMKS Ketintang Surabaya</title>
 
-  <!-- Google Fonts: Sora + DM Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
 
-  <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-  <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
-
-  <!-- CSS Sendiri -->
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
 
-  <!-- ============================================================
-       NAVBAR
-  ============================================================ -->
+  <!-- NAVBAR -->
   <nav class="navbar" id="mainNav">
     <div class="container">
       <div class="navbar-inner">
         <a href="#" class="brand">
-          <div class="brand-icon"><i class="bi bi-box-seam-fill"></i></div>
+          <div class="brand-icon">
+            <img src="assets/img/logo-smk.png" alt="SMK Ketintang" />
+          </div>
           SiPinjam
         </a>
         <ul class="nav-links">
@@ -57,9 +51,7 @@
     <a href="admin/login.php">Login Admin</a>
   </div>
 
-  <!-- ============================================================
-       HERO SECTION
-  ============================================================ -->
+  <!-- HERO SECTION -->
   <section class="hero" id="beranda">
     <div class="hero-bg-shapes"></div>
     <div class="dots-grid"></div>
@@ -87,13 +79,11 @@
               <i class="bi bi-box-seam"></i>
               Daftar Alat
             </a>
-
             <a href="#cara-pinjam" class="btn-outline-hero">
               <i class="bi bi-play-circle"></i>
-             Cara Pinjam
+              Cara Pinjam
             </a>
           </div>
-
         </div>
 
         <!-- Right: Visual Card -->
@@ -147,9 +137,7 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       FITUR SECTION
-  ============================================================ -->
+  <!-- FITUR SECTION -->
   <section class="section section-alt" id="fitur">
     <div class="container">
       <div class="text-center reveal">
@@ -180,9 +168,7 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       CARA PINJAM
-  ============================================================ -->
+  <!-- CARA PINJAM -->
   <section class="section section-alt" id="cara-pinjam">
     <div class="container">
       <div class="text-center reveal">
@@ -216,9 +202,7 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       CTA BANNER
-  ============================================================ -->
+  <!-- CTA BANNER -->
   <section class="cta-section">
     <div class="container">
       <div class="cta-content reveal">
@@ -238,15 +222,15 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       FOOTER
-  ============================================================ -->
+  <!-- FOOTER -->
   <footer>
     <div class="container">
       <div class="footer-top">
         <div>
           <div class="footer-brand-name">
-            <div class="brand-icon"><i class="bi bi-box-seam-fill"></i></div>
+            <div class="brand-icon">
+              <img src="assets/img/logo-smk.png" alt="SMK Ketintang" />
+            </div>
             SiPinjam
           </div>
           <p class="footer-desc">
@@ -279,17 +263,14 @@
     </div>
   </footer>
 
-  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    // NAVBAR SCROLL EFFECT
     const nav = document.getElementById('mainNav');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 50);
     });
 
-    // HAMBURGER MENU
     const hamburger   = document.getElementById('hamburger');
     const mobileMenu  = document.getElementById('mobileMenu');
     const mobileClose = document.getElementById('mobileClose');
@@ -299,7 +280,6 @@
 
     function closeMobile() { mobileMenu.classList.remove('open'); }
 
-    // SCROLL REVEAL ANIMATION
     const revealEls = document.querySelectorAll('.reveal');
     const observer  = new IntersectionObserver((entries) => {
       entries.forEach((entry, i) => {

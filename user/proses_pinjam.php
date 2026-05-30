@@ -1,5 +1,7 @@
 <?php
-include '../koneksi.php';
+include __DIR__ . '/../koneksi.php';
+
+/** @var mysqli $conn */
 
 $id_barang    = (int)$_POST['id_barang'];
 $nama         = mysqli_real_escape_string($conn, trim($_POST['nama_peminjam']));

@@ -38,9 +38,11 @@ $total = mysqli_num_rows($barang_list);
 <nav class="da-navbar">
   <div class="da-navbar-inner">
     <a href="../index.php" class="da-brand">
-      <div class="da-brand-icon"><i class="bi bi-box-seam-fill"></i></div>
-      <div class="da-brand-name">SiPinjam</div>
-    </a>
+  <div class="da-brand-icon">
+    <img src="../assets/img/logo-smk.png" alt="SMK Ketintang" />
+  </div>
+  <div class="da-brand-name">SiPinjam</div>
+</a>
     <div class="da-nav-links">
       <a href="../index.php" class="da-nav-link">Home</a>
       <a href="daftar_alat.php" class="da-nav-link active">Daftar Alat</a>

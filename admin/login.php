@@ -34,12 +34,12 @@ if (isset($_SESSION['login'])) {
   <div class="login-wrapper">
 
     <!-- Brand -->
-    <div class="login-brand">
-      <div class="login-brand-icon">
-        <i class="bi bi-box-seam-fill"></i>
-      </div>
-      <div class="login-brand-name">SiPinjam</div>
-    </div>
+<div class="login-brand">
+  <div class="login-brand-icon">
+    <img src="../assets/img/logo-smk.png" alt="SMK Ketintang" />
+  </div>
+  <div class="login-brand-name">SiPinjam</div>
+</div>
 
     <!-- Card -->
     <div class="login-card">
