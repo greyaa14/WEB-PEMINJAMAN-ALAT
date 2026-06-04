@@ -11,6 +11,7 @@ $total_barang   = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as tot
 $total_pinjam   = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as total FROM peminjaman WHERE status='dipinjam'"))['total'];
 $total_kembali  = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as total FROM peminjaman WHERE status='dikembalikan'"))['total'];
 $menunggu       = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as total FROM peminjaman WHERE status='menunggu'"))['total'];
+$total_admin    = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as total FROM users"))['total'];
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -37,11 +38,11 @@ $menunggu       = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as tot
 ============================================================ -->
 <aside class="sidebar" id="sidebar">
   <a href="#" class="sidebar-brand" onclick="showSection('dashboard')">
-  <div class="sidebar-brand-icon">
-    <img src="../assets/img/logo-smk.png" alt="SMK Ketintang" />
-  </div>
-  <div class="sidebar-brand-name">SiPinjam</div>
-</a>
+    <div class="sidebar-brand-icon">
+      <img src="../assets/img/logo-smk.png" alt="SMK Ketintang" />
+    </div>
+    <div class="sidebar-brand-name">SiPinjam</div>
+  </a>
 
   <nav class="sidebar-nav">
     <div class="nav-section-label">Menu Utama</div>
@@ -60,6 +61,9 @@ $menunggu       = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as tot
       <?php if($menunggu > 0): ?>
         <span class="badge-count"><?= $menunggu ?></span>
       <?php endif; ?>
+    </a>
+    <a class="nav-item" id="nav-admin" onclick="showSection('admin')">
+      <i class="bi bi-shield-lock-fill"></i> Kelola Admin
     </a>
 
     <div class="nav-section-label">Sistem</div>
@@ -338,8 +342,6 @@ $menunggu       = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as tot
             while($s = mysqli_fetch_assoc($qs)):
               $stok = $s['stok'] ?? 0;
               $dipinjam = $s['sedang_dipinjam'] ?? 0;
-
-             // Persentase sederhana (opsional)
               $pct = $stok > 0 ? (($stok - $dipinjam) / $stok) * 100 : 0;
               $fillClass = $pct > 50 ? 'fill-green' : ($pct > 20 ? 'fill-yellow' : 'fill-red');
               $badge = $pct > 50 ? 'badge-green' : ($pct > 20 ? 'badge-yellow' : 'badge-red');
@@ -347,9 +349,9 @@ $menunggu       = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as tot
             ?>
             <tr>
               <td><strong><?= htmlspecialchars($s['nama_barang']) ?></strong></td>
-              <td><?= $stok + $dipinjam ?></td> <!-- stok awal -->
+              <td><?= $stok + $dipinjam ?></td>
               <td><?= $dipinjam ?></td>
-              <td><?= $stok ?></td> <!-- stok tersisa -->
+              <td><?= $stok ?></td>
               <td>
                 <div class="stok-bar-wrap">
                   <div class="stok-bar">
@@ -517,6 +519,96 @@ $menunggu       = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as tot
     </div>
   </section>
 
+  <!-- ==================== KELOLA ADMIN ==================== -->
+  <section class="page-section" id="sec-admin">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Kelola Admin</div>
+        <div class="section-subtitle">Manajemen akun administrator SiPinjam</div>
+      </div>
+      <button class="btn-primary-dash" onclick="openModal('modalTambahAdmin')">
+        <i class="bi bi-plus-lg"></i> Tambah Admin
+      </button>
+    </div>
+
+    <!-- Info -->
+    <div style="background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:12px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:12px;font-size:.875rem;color:#1e40af;">
+      <i class="bi bi-info-circle-fill" style="font-size:1.1rem;flex-shrink:0;"></i>
+      <span>Total <strong><?= $total_admin ?> akun admin</strong> terdaftar. Minimal harus ada 1 akun admin aktif. Akun yang sedang login tidak dapat dihapus.</span>
+    </div>
+
+    <div class="dash-card">
+      <div class="dash-card-header">
+        <div class="section-title" style="font-size:.9rem;">Daftar Akun Admin</div>
+        <div class="table-search">
+          <i class="bi bi-search"></i>
+          <input type="text" placeholder="Cari username..." oninput="searchTable(this.value, 'tabelAdmin')">
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="dash-table" id="tabelAdmin">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Username</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            $qa = mysqli_query($conn, "SELECT * FROM users ORDER BY id ASC");
+            $no = 1;
+            while($a = mysqli_fetch_assoc($qa)):
+              $isSelf = ($a['username'] === $_SESSION['username']);
+            ?>
+            <tr>
+              <td><?= $no++ ?></td>
+              <td>
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <div style="width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,#3b82f6,#1a56db);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.9rem;flex-shrink:0;">
+                    <?= strtoupper(substr($a['username'], 0, 1)) ?>
+                  </div>
+                  <div>
+                    <div style="font-weight:600;color:var(--gray-800)"><?= htmlspecialchars($a['username']) ?></div>
+                    <div style="font-size:.72rem;color:var(--gray-400)">ID #<?= $a['id'] ?></div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge-dash badge-blue"><i class="bi bi-shield-check"></i> Administrator</span></td>
+              <td>
+                <?php if($isSelf): ?>
+                  <span class="badge-dash badge-green"><i class="bi bi-circle-fill" style="font-size:.5rem"></i> Login Sekarang</span>
+                <?php else: ?>
+                  <span class="badge-dash badge-gray"><i class="bi bi-circle-fill" style="font-size:.5rem"></i> Aktif</span>
+                <?php endif; ?>
+              </td>
+              <td style="display:flex;gap:6px;flex-wrap:wrap;">
+                <button class="btn-sm-act btn-edit"
+                  onclick="openEditAdmin(<?= $a['id'] ?>, '<?= htmlspecialchars($a['username'], ENT_QUOTES) ?>')">
+                  <i class="bi bi-pencil"></i> Edit
+                </button>
+                <?php if(!$isSelf): ?>
+                  <a href="hapus_admin.php?id=<?= $a['id'] ?>"
+                     class="btn-sm-act btn-del"
+                     onclick="return confirm('Yakin hapus akun admin \'<?= htmlspecialchars($a['username'], ENT_QUOTES) ?>\'?')">
+                    <i class="bi bi-trash"></i> Hapus
+                  </a>
+                <?php else: ?>
+                  <span style="font-size:.75rem;color:var(--gray-400);padding:5px 8px;display:inline-flex;align-items:center;gap:4px;">
+                    <i class="bi bi-lock"></i> Akun aktif
+                  </span>
+                <?php endif; ?>
+              </td>
+            </tr>
+            <?php endwhile; ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <!-- ============================================================
@@ -610,12 +702,115 @@ $menunggu       = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as tot
 </div>
 
 <!-- ============================================================
+     MODAL TAMBAH ADMIN
+============================================================ -->
+<div class="modal-overlay" id="modalTambahAdmin">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title"><i class="bi bi-shield-plus" style="color:var(--blue-500)"></i> Tambah Admin Baru</div>
+      <button class="modal-close" onclick="closeModal('modalTambahAdmin')"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <form action="simpan_admin.php" method="POST">
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="form-group span2">
+            <label class="form-label">Username</label>
+            <input type="text" name="username" class="form-input" placeholder="Masukkan username" required autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <div style="position:relative;">
+              <input type="password" name="password" id="pwTambah" class="form-input" placeholder="Min. 6 karakter" required autocomplete="new-password" style="padding-right:42px;">
+              <button type="button" onclick="togglePw('pwTambah','eyeTambah')" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--gray-400);">
+                <i class="bi bi-eye" id="eyeTambah"></i>
+              </button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Konfirmasi Password</label>
+            <div style="position:relative;">
+              <input type="password" name="konfirmasi" id="pwKonfTambah" class="form-input" placeholder="Ulangi password" required autocomplete="new-password" style="padding-right:42px;">
+              <button type="button" onclick="togglePw('pwKonfTambah','eyeKonfTambah')" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--gray-400);">
+                <i class="bi bi-eye" id="eyeKonfTambah"></i>
+              </button>
+            </div>
+          </div>
+          <div class="form-group span2" id="pwMatchInfo" style="display:none;">
+            <div style="font-size:.8rem;padding:8px 12px;border-radius:8px;" id="pwMatchMsg"></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-outline-dash" onclick="closeModal('modalTambahAdmin')">Batal</button>
+        <button type="submit" class="btn-primary-dash"><i class="bi bi-check-lg"></i> Simpan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL EDIT ADMIN -->
+<div class="modal-overlay" id="modalEditAdmin">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title"><i class="bi bi-shield-lock" style="color:var(--blue-500)"></i> Edit Admin</div>
+      <button class="modal-close" onclick="closeModal('modalEditAdmin')"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <form action="update_admin.php" method="POST">
+      <input type="hidden" name="id" id="editAdminId">
+      <input type="hidden" name="old_username" id="editAdminOldUsername">
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="form-group span2">
+            <label class="form-label">Username</label>
+            <input type="text" name="username" id="editAdminUsername" class="form-input" required autocomplete="off">
+          </div>
+          <div class="form-group span2" style="background:var(--gray-50);border-radius:10px;padding:12px 14px;border:1.5px solid var(--gray-200);">
+            <div style="font-size:.78rem;color:var(--gray-500);font-weight:600;margin-bottom:2px;text-transform:uppercase;letter-spacing:.4px;">
+              <i class="bi bi-info-circle"></i> Ganti Password
+            </div>
+            <div style="font-size:.8rem;color:var(--gray-500);">Kosongkan jika tidak ingin mengganti password.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password Baru</label>
+            <div style="position:relative;">
+              <input type="password" name="password" id="pwEdit" class="form-input" placeholder="Kosongkan jika tidak diganti" autocomplete="new-password" style="padding-right:42px;">
+              <button type="button" onclick="togglePw('pwEdit','eyeEdit')" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--gray-400);">
+                <i class="bi bi-eye" id="eyeEdit"></i>
+              </button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Konfirmasi Password</label>
+            <div style="position:relative;">
+              <input type="password" name="konfirmasi" id="pwKonfEdit" class="form-input" placeholder="Ulangi password baru" autocomplete="new-password" style="padding-right:42px;">
+              <button type="button" onclick="togglePw('pwKonfEdit','eyeKonfEdit')" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--gray-400);">
+                <i class="bi bi-eye" id="eyeKonfEdit"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-outline-dash" onclick="closeModal('modalEditAdmin')">Batal</button>
+        <button type="submit" class="btn-primary-dash"><i class="bi bi-check-lg"></i> Update</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ============================================================
      JAVASCRIPT
 ============================================================ -->
 <script>
 // ── Section Navigation ──────────────────────────────────────
-const sections = ['dashboard','barang','stok','peminjaman'];
-const titles   = { dashboard:'Dashboard', barang:'Manajemen Barang', stok:'Monitoring Stok', peminjaman:'Manajemen Peminjaman' };
+const sections = ['dashboard','barang','stok','peminjaman','admin'];
+const titles   = {
+  dashboard   : 'Dashboard',
+  barang      : 'Manajemen Barang',
+  stok        : 'Monitoring Stok',
+  peminjaman  : 'Manajemen Peminjaman',
+  admin       : 'Kelola Admin'
+};
 
 function showSection(name) {
   sections.forEach(s => {
@@ -642,7 +837,6 @@ function closeSidebar() {
 function openModal(id)  { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
-// Close modal when clicking overlay
 document.querySelectorAll('.modal-overlay').forEach(el => {
   el.addEventListener('click', function(e) {
     if (e.target === this) this.classList.remove('open');
@@ -655,8 +849,7 @@ function openEditBarang(id, nama, deskripsi, stok) {
   document.getElementById('editNama').value      = nama;
   document.getElementById('editDeskripsi').value = deskripsi;
   document.getElementById('editStok').value      = stok;
-  // Reset foto preview
-  document.getElementById('previewEdit').style.display = 'none';
+  document.getElementById('previewEdit').style.display     = 'none';
   document.getElementById('placeholderEdit').style.display = 'flex';
   openModal('modalEditBarang');
 }
@@ -688,7 +881,6 @@ function searchTable(query, tableId) {
 // ── Global Search ────────────────────────────────────────────
 function handleGlobalSearch(q) {
   if (!q) return;
-  // Auto navigate to peminjaman and search
   showSection('peminjaman');
   searchTable(q, 'tabelPeminjaman');
 }
@@ -701,11 +893,56 @@ function filterPeminjaman(status, btn) {
   });
   btn.classList.add('btn-primary-dash');
   btn.classList.remove('btn-outline-dash');
-
   const rows = document.querySelectorAll('#tabelPeminjaman tbody tr');
   rows.forEach(row => {
     row.style.display = (status === 'semua' || row.dataset.status === status) ? '' : 'none';
   });
+}
+
+// ── Toggle Password Visibility ───────────────────────────────
+function togglePw(inputId, iconId) {
+  const input = document.getElementById(inputId);
+  const icon  = document.getElementById(iconId);
+  if (input.type === 'password') {
+    input.type = 'text';
+    icon.className = 'bi bi-eye-slash';
+  } else {
+    input.type = 'password';
+    icon.className = 'bi bi-eye';
+  }
+}
+
+// ── Open Edit Admin Modal ────────────────────────────────────
+function openEditAdmin(id, username) {
+  document.getElementById('editAdminId').value          = id;
+  document.getElementById('editAdminUsername').value    = username;
+  document.getElementById('editAdminOldUsername').value = username;
+  document.getElementById('pwEdit').value               = '';
+  document.getElementById('pwKonfEdit').value           = '';
+  openModal('modalEditAdmin');
+}
+
+// ── Password Match Checker (Tambah Admin) ────────────────────
+const pwT  = document.getElementById('pwTambah');
+const pwKT = document.getElementById('pwKonfTambah');
+if (pwT && pwKT) {
+  function checkPwMatch() {
+    const info = document.getElementById('pwMatchInfo');
+    const msg  = document.getElementById('pwMatchMsg');
+    if (!pwKT.value) { info.style.display = 'none'; return; }
+    info.style.display = 'block';
+    if (pwT.value === pwKT.value) {
+      msg.style.background = '#dcfce7';
+      msg.style.color      = '#15803d';
+      msg.innerHTML = '<i class="bi bi-check-circle-fill"></i> Password cocok';
+    } else {
+      msg.style.background = '#fee2e2';
+      msg.style.color      = '#b91c1c';
+      msg.innerHTML = '<i class="bi bi-x-circle-fill"></i> Password tidak sama';
+    }
+  }
+  pwT.addEventListener('input', checkPwMatch);
+  pwKT.addEventListener('input', checkPwMatch);
 }
 
 // ── Toast ────────────────────────────────────────────────────
@@ -719,7 +956,7 @@ function showToast(msg, type = 'success') {
   setTimeout(() => el.remove(), 3500);
 }
 
-// Show toast from URL param
+// Show toast / redirect from URL param
 const urlParams = new URLSearchParams(window.location.search);
 if (urlParams.get('success')) showToast(decodeURIComponent(urlParams.get('success')));
 if (urlParams.get('error'))   showToast(decodeURIComponent(urlParams.get('error')), 'error');
